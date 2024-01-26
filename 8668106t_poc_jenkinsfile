@@ -1,1 +1,65 @@
+pipeline {
+    agent any
 
+    stages {
+        stage('ST18668106t') {
+            steps {
+                echo 'ST18668106t: Environment is prepared. Start to rollout to TEST server'
+            }
+        }
+
+        stage('ST28668106t') {
+            steps {
+                sh 'docker stop BKUP-TEST-image || true'
+                sh 'docker rm BKUP-TEST-image || true'
+                sh 'docker commit TESTsvr8668106t BKUP-TEST-image'
+                sh 'bolt script run /tmp/8668106t/work/8668106t_script --targets TESTsvr8668106t'
+                echo 'ST28668106t: TEST server is backup and updated'
+            }
+        }
+
+        stage('ST38668106t') {
+            steps {
+                sh 'curl -ls http://TESTsvr8668106t.localdomain | head -n 1 > /tmp/TEST-result-file'
+                echo 'ST38668106t: Test result for TEST server is generated: TEST-result-file'
+            }
+        }
+
+        stage('ST48668106t') {
+            steps {
+                echo 'ST48668106t: Test server\'s testing result has been inspected'
+                input 'Proceed Production or Rollback Test?'
+            }
+        }
+
+        stage('ST58668106t') {
+            steps {
+                script {
+                    if (input == 'Proceed Production') {
+                        echo 'ST58668106t: Proceed to Production Phase'
+                        sh 'bolt script run /tmp/8668106t/work/8668106t_script --targets PRODsvr8668106t'
+                        echo 'ST68668106t: Production server is updated'
+                    } else {
+                        echo 'ST58668106t: Rollback Test server'
+                        sh 'docker stop TESTsvr8668106t || true'
+                        sh 'docker rm TESTsvr8668106t || true'
+                        sh 'docker run --name TESTsvr8668106t -d BKUP-TEST-image'
+                        echo 'ST68668106t: TEST server is rollback'
+                    }
+                }
+            }
+        }
+
+        stage('ST68668106t') {
+            steps {
+                script {
+                    if (input == 'Proceed Production') {
+                        echo 'ST68668106t: Production server is updated'
+                    } else {
+                        echo 'ST68668106t: TEST server is rollback'
+                    }
+                }
+            }
+        }
+    }
+}
