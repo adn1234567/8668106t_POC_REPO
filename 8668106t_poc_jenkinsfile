@@ -18,7 +18,7 @@ pipeline {
                     puppet resource file /tmp/8668106t/work ensure=absent force=true;
                     puppet resource file /tmp/8668106t/work ensure=directory;
                     targets=TESTsvr8668106t;
-                    locate_script='/tmp/8668106t/work/8668106t_POC_REPO/8668106t_script';
+                    locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
                     bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                 '''
 
@@ -50,7 +50,7 @@ pipeline {
                             puppet resource file /tmp/8668106t/work ensure=absent force=true;
                             puppet resource file /tmp/8668106t/work ensure=directory;
                             targets=PRODsvr8668106t;
-                            locate_script='/tmp/8668106t/work/8668106t_POC_REPO/8668106t_script';
+                            locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
                             bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                         '''
                         echo 'ST68668106t: Production server is updated'
