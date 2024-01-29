@@ -13,7 +13,14 @@ pipeline {
                 sh 'docker stop BKUP-TEST-image || true'
                 sh 'docker rm BKUP-TEST-image || true'
                 sh 'docker commit TESTsvr8668106t BKUP-TEST-image'
-                sh 'bolt script run /tmp/8668106t/work/8668106t_script --targets TESTsvr8668106t'
+                sh "#!/bin/bash
+                puppet resource file /tmp/8668106t/work ensure=absent force=true;
+                puppet resource file /tmp/8668106t/work ensure=directory;
+	   	        targets=TESTsvr8668106t;
+                locate_script='/tmp/8668106t/work/8668106t_POC_REPO/8668106t_script';
+                bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
+                "
+
                 echo 'ST28668106t: TEST server is backup and updated'
             }
         }
@@ -37,7 +44,13 @@ pipeline {
                 script {
                     if (input == 'Proceed Production') {
                         echo 'ST58668106t: Proceed to Production Phase'
-                        sh 'bolt script run /tmp/8668106t/work/8668106t_script --targets PRODsvr8668106t'
+                        sh "#!/bin/bash
+                	puppet resource file /tmp/8668106t/work ensure=absent force=true;
+                	puppet resource file /tmp/8668106t/work ensure=directory;
+	   		        targets=PRODsvr8668106t;
+                	locate_script='/tmp/8668106t/work/8668106t_POC_REPO/8668106t_script';
+                	bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
+                	"
                         echo 'ST68668106t: Production server is updated'
                     } else {
                         echo 'ST58668106t: Rollback Test server'
