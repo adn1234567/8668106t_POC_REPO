@@ -10,8 +10,8 @@ pipeline {
 
         stage('ST28668106t') {
             steps {
-                sh 'docker stop BKUP-TEST-image || true'
-                sh 'docker rm BKUP-TEST-image || true'
+                sh 'docker stop bkup-test-image || true'
+                sh 'docker rm bkup-test-image || true'
                 sh 'docker commit TESTsvr8668106t bkup-test-image'
                 sh '''
                     #!/bin/bash
