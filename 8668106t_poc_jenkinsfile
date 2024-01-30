@@ -13,11 +13,12 @@ pipeline {
                 sh 'docker stop bkup-test-image || true'
                 sh 'docker rm bkup-test-image || true'
                 sh 'docker commit TESTsvr8668106t bkup-test-image'
-                sh 'docker module install puppetlabs-git'
+              
                 sh '''
                     #!/bin/bash
                     puppet resource file /tmp/8668106t/work ensure=absent force=true;
                     puppet resource file /tmp/8668106t/work ensure=directory;
+                    
                     cd /tmp/8668106t/work
                     git clone https://github.com/adn1234567/8668106t_poc_repo.git
                     targets=TESTsvr8668106t;
