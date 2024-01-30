@@ -13,8 +13,7 @@ pipeline {
                 
                 sh '''
                     #!/bin/bash
-                    puppet resource file /tmp/8668106t/work ensure=absent force=true;
-		    sudo puppet resource file /tmp/8668106t/work ensure=directory;
+                    
                     cd /tmp/8668106t/work;
 	            git clone https://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@github.com/adn1234567/8668106t_POC_REPO.git;
                     targets=TESTsvr8668106t;
