@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh 'docker stop BKUP-TEST-image || true'
                 sh 'docker rm BKUP-TEST-image || true'
-                sh 'docker commit TESTsvr8668106t BKUP-TEST-image'
+                sh 'docker commit TESTsvr8668106t bkup-test-image'
                 sh '''
                     #!/bin/bash
                     puppet resource file /tmp/8668106t/work ensure=absent force=true;
