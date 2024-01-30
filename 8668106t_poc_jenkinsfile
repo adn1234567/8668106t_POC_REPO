@@ -13,9 +13,8 @@ pipeline {
                 
                 sh '''
                     #!/bin/bash
-                    puppet resource file /tmp/8668106t/work/8668106t_poc_repo ensure=absent force=true;
-                    puppet resource file /tmp/8668106t/work/8668106t_poc_repo ensure=directory;
-                    cd /tmp//8668106t/work;
+                    
+                    cd /tmp//8668106t/work/8668106t_poc_repo;
 	            git clone https:/github.com/adn1234567/8668106t_POC_REPO.git;
                     targets=TESTsvr8668106t;
                     locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
