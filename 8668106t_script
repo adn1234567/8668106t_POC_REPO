@@ -1,14 +1,14 @@
 # Filename: 8668106t_script
 #!/bin/bash
-sudo apt-get update
-sudo puppet resource package git ensure=present
+apt-get update
+puppet resource package git ensure=present
 
 # Use Puppet command to ensure apache2 service is installed and running
-sudo puppet resource service apache2 ensure=running
+puppet resource service apache2 ensure=running
 
 # Use Puppet command to remove directory /tmp/8668106t/work and recreate directory /tmp/8668106t/work
-sudo puppet resource file /tmp/8668106t/work ensure=absent force=true
-sudo puppet resource file /tmp/8668106t/work ensure=directory
+puppet resource file /tmp/8668106t/work ensure=absent force=true
+puppet resource file /tmp/8668106t/work ensure=directory
 
 # Clone 8668106t_POC_Repo to container’s /tmp/8668106t/work
 #puppet resource git /tmp/8668106t/work ensure=present source=https://github.com/adn1234567/8668106t_POC_REPO.git
