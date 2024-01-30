@@ -13,7 +13,7 @@ puppet resource file /tmp/8668106t/work ensure=directory
 # Clone 8668106t_POC_Repo to container’s /tmp/8668106t/work
 #puppet resource git /tmp/8668106t/work ensure=present source=https://github.com/adn1234567/8668106t_POC_REPO.git
 cd /tmp/8668106t/work
-sudo git clone https://github.com/adn1234567/8668106t_POC_REPO.git
+git clone https://github.com/adn1234567/8668106t_POC_REPO.git
 
 
 # Copy new 8668106t_index.html to replace /var/www/html/index.html
