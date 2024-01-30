@@ -1,6 +1,6 @@
 # Filename: 8668106t_script
 #!/bin/bash
-apt-get update
+sudo apt-get update
 sudo puppet resource package git ensure=present
 
 # Use Puppet command to ensure apache2 service is installed and running
