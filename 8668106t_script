@@ -7,7 +7,7 @@ puppet resource service apache2 ensure=running
 
 # Use Puppet command to remove directory /tmp/8668106t/work and recreate directory /tmp/8668106t/work
 puppet resource file /tmp/8668106t/work ensure=absent force=true
-puppet resource exec command="mkdir /tmp/8668106t/work"
+puppet resource file /tmp/8668106t/work ensure=directory
 
 # Clone 8668106t_POC_Repo to container’s /tmp/8668106t/work
 #puppet resource git /tmp/8668106t/work ensure=present source=https://github.com/adn1234567/8668106t_poc_repo.git
