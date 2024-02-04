@@ -39,7 +39,7 @@ pipeline {
 
         stage('ST48668106t') {
             steps {
-                echo 'ST48668106t: Test server\'s testing result has been inspected'
+                echo 'ST48668106t: Test server's testing result has been inspected'
                 input 'Proceed Production or Rollback Test?'
             }
         }
@@ -51,7 +51,9 @@ pipeline {
                         echo 'ST58668106t: Proceed to Production Phase'
                         sh '''
                             #!/bin/bash
-                           
+                            puppet resource file /tmp/8668106t/work ensure=absent force=true;
+                            puppet resource file /tmp/8668106t/work ensure=directory;
+                            puppet resource package git ensure=present;
                             targets=PRODsvr8668106t.localdomain;
                             locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
                             bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
