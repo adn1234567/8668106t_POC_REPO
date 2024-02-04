@@ -1,6 +1,6 @@
 # Filename: 8668106t_script
 #!/bin/bash
-apt-get update
+
 
 # Use Puppet command to ensure apache2 service is installed and running
 puppet resource service apache2 ensure=running
