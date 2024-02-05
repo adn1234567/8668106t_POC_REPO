@@ -52,7 +52,7 @@ pipeline {
         stage('ST58668106t') {
             steps {
                 script {
-                    if (v2 == 'Proceed Production') {
+                    if ('${v2}' == 'Proceed Production') {
                         echo 'ST58668106t: Proceed to Production Phase'
                         sh '''
                             #!/bin/bash
