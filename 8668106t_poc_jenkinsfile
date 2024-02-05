@@ -41,7 +41,7 @@ pipeline {
             steps {
 		echo 'ST48668106t: Test server's testing result has been inspected'
 		script{
-	    v2 = input(
+	    	v2 = input(
 		message:'Action',
                 parameters: [choice(name:'',choices: ['Proceed Production', 'Rollback Test'])]
 		)
