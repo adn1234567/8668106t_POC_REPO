@@ -52,7 +52,7 @@ pipeline {
        stage('ST58668106t') {
             steps {
                 script {
-                    if (v2 == "Proceed Production") {
+                    if (v2 == 'Proceed Production') {
                         echo 'ST58668106t: Proceed to Production Phase'
                         sh '''
                             #!/bin/bash
@@ -60,8 +60,8 @@ pipeline {
                             locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
                             bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                         '''
-                        echo "ST68668106t: Production server is updated"
-                    } else {
+                        
+                    } else if (v2 == 'Rollback Test') {
                         echo "ST58668106t: Rollback Test server"
                         sh 'docker stop TESTsvr8668106t || true'
                         sh 'docker rm TESTsvr8668106t || true'
@@ -77,7 +77,7 @@ pipeline {
                 script {
                     if (v2 == 'Proceed Production') {
                         echo "ST68668106t: Production server is updated"
-                    } else {
+                    } else if (v2 == 'Rollback Test') {
                         echo "ST68668106t: TEST server is rollback"
                     }
                 }
