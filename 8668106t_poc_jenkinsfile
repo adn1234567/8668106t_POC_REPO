@@ -76,7 +76,7 @@ pipeline {
             steps {
                 script {
                     if (v2 == 'Proceed Production') {
-                        echo 'ST68668106t: Production server is updated'
+                        echo "ST68668106t: Production server is updated"
                     } else {
                         echo "ST68668106t: TEST server is rollback"
                     }
