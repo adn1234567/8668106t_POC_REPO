@@ -37,19 +37,41 @@ pipeline {
             }
         }
 
-        stage('ST48668106t') {
+	stage('ST48668106t') {
             steps {
 		echo 'ST48668106t: Test server's testing result has been inspected'
 		script{
 	    v2 = input(
 		message:'Action',
-                input 'Proceed Production or Rollback Test?'
+                parameters: [choice(name:'',choices: ['Proceed Production', 'Rollback Test'])]
 		)
 		}
             }
         }
+
+       stage('ST58668106t') {
+            steps {
+                script {
+                    if (v2 == 'Proceed Production') {
+                        echo 'ST58668106t: Proceed to Production Phase'
+                        sh '''
+                            #!/bin/bash
+                            targets=PRODsvr8668106t;
+                            locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
+                            bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
+                        '''
+                        echo 'ST68668106t: Production server is updated'
+                    } else {
+                        echo 'ST58668106t: Rollback Test server'
+                        sh 'docker stop TESTsvr8668106t || true'
+                        sh 'docker rm TESTsvr8668106t || true'
+                        sh 'docker run --name TESTsvr8668106t -d bkup-test-image'
+                        echo 'ST68668106t: TEST server is rollback'
+                    }
+                }
+            }
+        }
  
-        
         stage('ST68668106t') {
             steps {
                 script {
