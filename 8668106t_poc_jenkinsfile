@@ -39,7 +39,7 @@ pipeline {
 
 	stage('ST48668106t') {
             steps {
-		echo 'ST48668106t: Test server's testing result has been inspected'
+		echo "ST48668106t: Test server's testing result has been inspected"
 		script{
 	    	v2 = input(
 		message:'Action',
