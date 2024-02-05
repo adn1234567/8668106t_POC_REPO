@@ -43,7 +43,7 @@ pipeline {
                 script{
 	            v2 = input(
 		        message:'Action',
-                input 'Proceed Production or Rollback Test?'
+                	input 'Proceed Production or Rollback Test?'
                 )
                 }
             }
