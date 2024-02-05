@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('ST18668106t') {
             steps {
-                echo 'ST18668106t: Environment is prepared. Start to rollout to TEST server'
+                echo "ST18668106t: Environment is prepared. Start to rollout to TEST server"
             }
         }
 
@@ -26,14 +26,14 @@ pipeline {
                     bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                 '''
 
-                echo 'ST28668106t: TEST server is backup and updated'
+                echo "ST28668106t: TEST server is backup and updated"
             }
         }
 
         stage('ST38668106t') {
             steps {
                 sh 'curl -is http://TESTsvr8668106t.localdomain | head -n 1 > /tmp/TEST-result-file'
-                echo 'ST38668106t: Test result for TEST server is generated: TEST-result-file'
+                echo "ST38668106t: Test result for TEST server is generated: TEST-result-file"
             }
         }
 
@@ -60,13 +60,13 @@ pipeline {
                             locate_script='/tmp/8668106t/work/8668106t_poc_repo/8668106t_script';
                             bolt script run $locate_script -t $targets -u clientadm -p user123 --no-host-key-check --run-as root;
                         '''
-                        echo 'ST68668106t: Production server is updated'
+                        echo "ST68668106t: Production server is updated"
                     } else {
-                        echo 'ST58668106t: Rollback Test server'
+                        echo "ST58668106t: Rollback Test server"
                         sh 'docker stop TESTsvr8668106t || true'
                         sh 'docker rm TESTsvr8668106t || true'
                         sh 'docker run --name TESTsvr8668106t -d bkup-test-image'
-                        echo 'ST68668106t: TEST server is rollback'
+                        echo "ST68668106t: TEST server is rollback"
                     }
                 }
             }
@@ -78,7 +78,7 @@ pipeline {
                     if (v2 == 'Proceed Production') {
                         echo 'ST68668106t: Production server is updated'
                     } else {
-                        echo 'ST68668106t: TEST server is rollback'
+                        echo "ST68668106t: TEST server is rollback"
                     }
                 }
             }
