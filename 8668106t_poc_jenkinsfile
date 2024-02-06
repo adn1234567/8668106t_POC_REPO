@@ -33,7 +33,7 @@ pipeline {
         stage('ST38668106t') {
             steps {
                 sh 'curl -is http://TESTsvr8668106t.localdomain | head -n 1 > /tmp/TEST-result-file'
-		cat '/tmp/TEST-result-file'
+		cat '/tmp/TEST-result-result'
                 echo "ST38668106t: Test result for TEST server is generated: TEST-result-file"
             }
         }
